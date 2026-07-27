@@ -1,7 +1,7 @@
-<H3>ENTER YOUR NAME</H3>
-<H3>ENTER YOUR REGISTER NO.</H3>
+<H3>NAME: LAKSHANYA.N </H3>
+<H3>REGISTER NO: 212224230136</H3>
 <H3>EX. NO.1</H3>
-<H3>DATE</H3>
+<H3>DATE: 27/027/2026</H3>
 <H1 ALIGN =CENTER> Introduction to Kaggle and Data preprocessing</H1>
 
 ## AIM:
@@ -37,12 +37,70 @@ STEP 5:Normalizing the data<BR>
 STEP 6:Splitting the data into test and train<BR>
 
 ##  PROGRAM:
-TYPE YOUR CODE HERE
+```
+#import libraries
+from google.colab import files
+import pandas as pd
+import io
+from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import MinMaxScaler
+from sklearn.model_selection import train_test_split
+```
+```
+#Read the dataset from drive
+df = pd.read_csv('student_performance_dataset.csv')
+print(df)
+#split the dataset
+X = df.iloc[:, :-1].values
+print(X)
+y = df.iloc[:, -1].values
+print(y)
+# Finding Missing Values
+print(df.isnull().sum())
+#Handling Missing values
+df.fillna(df.mean(numeric_only=True).round(1), inplace=True)
+df['parental_education'].fillna(df['parental_education'].mode()[0], inplace=True)
+print(df.isnull().sum())
+y = df.iloc[:, -1].values
+print(y)
+```
+```
+#Check for Duplicates
+df.duplicated()
+#Detect Outliers
+print(df['final_exam_score'].describe())
+#When we normalize the dataset it brings the value of all the features
+#between 0 and 1 so that all the columns are in the same range,
+# and thus there is no dominant feature.
+numeric_cols = df.select_dtypes(include='number').columns
+scaler = MinMaxScaler()
+df1 = pd.DataFrame(scaler.fit_transform(df[numeric_cols]), columns=numeric_cols)
+print(df1)
+```
+```
+#splitting the data for training & Testing
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2)
+#'test_size=0.2' means 20% test data and 80% train data
+print(X_train)
+print(len(X_train))
+print(X_test)
+print(len(X_test))
 
-
+print(y_train)
+print(len(y_train))
+print(y_test)
+print(len(y_test))
+```
 ## OUTPUT:
-SHOW YOUR OUTPUT HERE
+<img width="666" height="707" alt="image" src="https://github.com/user-attachments/assets/c52929fa-2602-4594-b631-51ec3299e8ad" />
 
+<img width="562" height="696" alt="image" src="https://github.com/user-attachments/assets/913dc0aa-f6ae-48d5-9c23-7fa08e3b3b2a" />
+
+<img width="620" height="701" alt="image" src="https://github.com/user-attachments/assets/449ef11e-8fae-4775-89de-267a62f73772" />
+
+<img width="702" height="592" alt="image" src="https://github.com/user-attachments/assets/b8c92aec-7633-4354-8a9f-42eb37656748" />
+
+<img width="653" height="635" alt="image" src="https://github.com/user-attachments/assets/b3241853-6deb-4d16-b384-120ed09a68c9" />
 
 ## RESULT:
 Thus, Implementation of Data Preprocessing is done in python  using a data set downloaded from Kaggle.
